@@ -10,9 +10,9 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('designations', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->string('email')->unique();
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }
