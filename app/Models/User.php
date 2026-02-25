@@ -32,7 +32,7 @@ final class User extends Model
 
     protected $hidden = [];
 
-    public function pmsProfile(): HasOne
+    public function profile(): HasOne
     {
         return $this->hasOne(
             related: PmsUserProfile::class,
