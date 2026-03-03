@@ -10,6 +10,9 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "jeremyaliparo/service-integration-contracts": "^1.1",
+        "jeremyaliparo/service-integration-core": "^1.3",
+        "jeremyaliparo/service-integration-schemas": "^1.6",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1"
     },
@@ -86,5 +89,19 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/jeremyaliparo/service-integration-core"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/jeremyaliparo/service-integration-schemas"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/jeremyaliparo/service-integration-contracts"
+        }
+    ]
 }

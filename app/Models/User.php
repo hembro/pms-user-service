@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 /**
  * @property-read string $id
  * @property-read string $email
+ * @property-read ?CarbonInterface $last_synced_at
  * @property-read ?CarbonInterface $created_at
  * @property-read ?CarbonInterface $updated_at
  * @property-read ?PmsUserProfile $pmsProfile
@@ -81,6 +82,8 @@ final class User extends Model
 
     protected function casts(): array
     {
-        return [];
+        return [
+            'last_synced_at' => 'datetime',
+        ];
     }
 }
