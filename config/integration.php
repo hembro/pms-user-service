@@ -11,6 +11,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'subscriptions' => [
+        UserRoutingKey::USER_CREATED->value => App\Jobs\Integration\Users\ProcessUserCreatedEvent::class,
         UserRoutingKey::USER_REGISTERED->value => App\Jobs\Integration\Users\ProcessUserRegisteredEvent::class,
         UserRoutingKey::USER_PROFILE_UPDATED->value => App\Jobs\Integration\Users\ProcessUserProfileUpdatedEvent::class,
     ],

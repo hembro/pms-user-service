@@ -8,9 +8,9 @@ use App\Actions\Integration\Users\Concerns\SyncsUserContext;
 use App\Models\User;
 use Illuminate\Database\DatabaseManager;
 use jeremyaliparo\IntegrationSchemas\Attributes\UserAttributes;
-use jeremyaliparo\IntegrationSchemas\Events\Users\UserRegisteredEvent;
+use jeremyaliparo\IntegrationSchemas\Events\Users\UserCreatedEvent;
 
-final readonly class SyncRegisteredUser
+final readonly class SyncCreatedUser
 {
     use SyncsUserContext;
 
@@ -18,7 +18,7 @@ final readonly class SyncRegisteredUser
         private DatabaseManager $db
     ) {}
 
-    public function handle(UserRegisteredEvent $event): void
+    public function handle(UserCreatedEvent $event): void
     {
         /** @var UserAttributes $attributes */
         $attributes = $event->target->attributes;
