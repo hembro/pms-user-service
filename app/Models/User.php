@@ -7,39 +7,44 @@ namespace App\Models;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use jeremyaliparo\IntegrationSchemas\Enums\Users\UserStatus;
 
 /**
  * @property-read string $id
  * @property-read string $email
+ * @property-read string $name
+ * @property-read string $status
+ * @property-read ?string $avatar_url
+ * @property-read ?Collection<Division> $divisions
+ * @property-read ?Expertise $expertise
+ * @property-read ?Designation $designation
+ * @property-read ?string $employment_status
+ * @property-read ?Collection<AreaAssignment> $areaAssignments
+ * @property-read ?EducationBackground $educationBackgrounds
  * @property-read ?CarbonInterface $last_synced_at
  * @property-read ?CarbonInterface $created_at
  * @property-read ?CarbonInterface $updated_at
- * @property-read ?PmsUserProfile $pmsProfile
- * @property-read ?Expertise $expertise
- * @property-read ?Designation $designations
- * @property-read ?Collection<Division> $divisions
- * @property-read ?Collection<AreaAssignment> $areaAssignments
  */
 final class User extends Model
 {
-    use HasFactory, HasUlids;
+    use HasUlids;
 
     protected $guarded = [];
 
     protected $hidden = [];
 
-    public function profile(): HasOne
+    public function divisions(): BelongsToMany
     {
-        return $this->hasOne(
-            related: PmsUserProfile::class,
-            foreignKey: 'user_id',
-            localKey: 'id',
-        );
+        return $this->belongsToMany(
+            related: Division::class,
+            table: 'division_user',
+            foreignPivotKey: 'user_id',
+            relatedPivotKey: 'division_id',
+        )->withTimestamps();
     }
 
     public function expertise(): BelongsTo
@@ -60,16 +65,6 @@ final class User extends Model
         );
     }
 
-    public function divisions(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            related: Division::class,
-            table: 'division_user',
-            foreignPivotKey: 'user_id',
-            relatedPivotKey: 'division_id',
-        )->withTimestamps();
-    }
-
     public function areaAssignments(): BelongsToMany
     {
         return $this->belongsToMany(
@@ -80,9 +75,19 @@ final class User extends Model
         )->withTimestamps();
     }
 
+    public function educationBackgrounds(): HasMany
+    {
+        return $this->hasMany(
+            related: EducationBackground::class,
+            foreignKey: 'user_id',
+            localKey: 'id',
+        );
+    }
+
     protected function casts(): array
     {
         return [
+            'status' => UserStatus::class,
             'last_synced_at' => 'datetime',
         ];
     }

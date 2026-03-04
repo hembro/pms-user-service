@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use jeremyaliparo\IntegrationSchemas\Enums\Users\UserRoutingKey;
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -9,7 +11,8 @@ return [
     |--------------------------------------------------------------------------
     */
     'subscriptions' => [
-        // 'user.updated' => \App\Jobs\Integration\Users\ProcessUserUpdatedMessage::class,
+        UserRoutingKey::USER_REGISTERED->value => App\Jobs\Integration\Users\ProcessUserRegisteredEvent::class,
+        UserRoutingKey::USER_PROFILE_UPDATED->value => App\Jobs\Integration\Users\ProcessUserProfileUpdatedEvent::class,
     ],
 
     /*
@@ -17,7 +20,7 @@ return [
     | Consumer Queue Configuration
     |--------------------------------------------------------------------------
     */
-    'queue_name' => env('INTEGRATION_QUEUE_NAME', 'default_service_events'),
+    'queue_name' => env('INTEGRATION_QUEUE_NAME', 'pms_user_service_queue'),
 
     /**
      * |--------------------------------------------------------------------------

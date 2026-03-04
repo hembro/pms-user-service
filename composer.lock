@@ -1124,16 +1124,16 @@
         },
         {
             "name": "jeremyaliparo/service-integration-schemas",
-            "version": "1.6.0",
+            "version": "1.7.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:jeremyaliparo/service-integration-schemas.git",
-                "reference": "360f2a6d941dcfb3c671b49fa3bf2bdc89f95039"
+                "reference": "c2f24f96d5867ae8c2e2113baa4cd59ba22db331"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jeremyaliparo/service-integration-schemas/zipball/360f2a6d941dcfb3c671b49fa3bf2bdc89f95039",
-                "reference": "360f2a6d941dcfb3c671b49fa3bf2bdc89f95039",
+                "url": "https://api.github.com/repos/jeremyaliparo/service-integration-schemas/zipball/c2f24f96d5867ae8c2e2113baa4cd59ba22db331",
+                "reference": "c2f24f96d5867ae8c2e2113baa4cd59ba22db331",
                 "shasum": ""
             },
             "require": {
@@ -1148,10 +1148,10 @@
             },
             "description": "Centralized place for integration schemas.",
             "support": {
-                "source": "https://github.com/jeremyaliparo/service-integration-schemas/tree/1.6.0",
+                "source": "https://github.com/jeremyaliparo/service-integration-schemas/tree/1.7.1",
                 "issues": "https://github.com/jeremyaliparo/service-integration-schemas/issues"
             },
-            "time": "2026-03-02T06:05:41+00:00"
+            "time": "2026-03-03T04:25:07+00:00"
         },
         {
             "name": "laravel/framework",

@@ -10,18 +10,18 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('area_assignment_user', function (Blueprint $table) {
+        Schema::create('education_backgrounds', function (Blueprint $table) {
             $table->ulid('id')->primary();
 
             $table->foreignUlid('user_id')
                 ->constrained(table: 'users', column: 'id')
                 ->cascadeOnDelete();
 
-            $table->foreignUlid('area_assignment_id')
-                ->constrained(table: 'area_assignments', column: 'id')
-                ->cascadeOnDelete();
-
-            $table->unique(['user_id', 'area_assignment_id']);
+            $table->string('level');
+            $table->string('school')->nullable();
+            $table->string('degree')->nullable();
+            $table->string('year')->nullable();
+            $table->text('awards')->nullable();
 
             $table->timestamps();
         });
