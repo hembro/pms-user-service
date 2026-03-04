@@ -24,7 +24,7 @@ use jeremyaliparo\IntegrationSchemas\Enums\Users\UserStatus;
  * @property-read ?Designation $designation
  * @property-read ?string $employment_status
  * @property-read ?Collection<AreaAssignment> $areaAssignments
- * @property-read ?EducationBackground $educationBackgrounds
+ * @property-read ?Collection<EducationBackground> $educationBackgrounds
  * @property-read ?CarbonInterface $last_synced_at
  * @property-read ?CarbonInterface $created_at
  * @property-read ?CarbonInterface $updated_at

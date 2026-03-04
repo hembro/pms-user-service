@@ -13,13 +13,13 @@ final readonly class EducationBackground
         public ?string $school,
         public ?string $degree,
         public ?string $year,
-        public ?string $awards = null,
+        public ?string $awards,
     ) {}
 
     public static function fromArray(array $data): self
     {
         return new self(
-            level: EducationLevel::tryFrom($data['level']) ?? EducationLevel::UNSPECIFIED,
+            level: EducationLevel::tryFrom($data['level'] ?? '') ?? EducationLevel::UNSPECIFIED,
             school: $data['school'] ?? null,
             degree: $data['degree'] ?? null,
             year: $data['year'] ?? null,
