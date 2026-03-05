@@ -12,7 +12,7 @@
         "php": "^8.4 || ^8.5",
         "jeremyaliparo/service-integration-contracts": "^1.2",
         "jeremyaliparo/service-integration-core": "^1.6.1",
-        "jeremyaliparo/service-integration-schemas": "^1.8",
+        "jeremyaliparo/service-integration-schemas": "^1.9",
         "jeremyaliparo/service-http-responses": "^1.0.1",
         "laravel/framework": "^12.53",
         "laravel/tinker": "^2.11.1"

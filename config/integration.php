@@ -15,6 +15,7 @@ return [
         UserRoutingKey::USER_REGISTERED->value => App\Jobs\Integration\Users\ProcessUserRegisteredEvent::class,
         UserRoutingKey::USER_PROFILE_UPDATED->value => App\Jobs\Integration\Users\ProcessUserProfileUpdatedEvent::class,
         UserRoutingKey::USER_STATUS_UPDATED->value => App\Jobs\Integration\Users\ProcessUserStatusChangedEvent::class,
+        UserRoutingKey::USER_AVATAR_UPDATED->value => App\Jobs\Integration\Users\ProcessUserAvatarUpdatedEvent::class,
         UserRoutingKey::USER_DELETED->value => App\Jobs\Integration\Users\ProcessUserDeletedEvent::class,
     ],
 
