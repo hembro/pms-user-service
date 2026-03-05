@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -18,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 final class Designation extends Model
 {
+    use HasFactory;
     use HasUlids;
 
     protected $guarded = [

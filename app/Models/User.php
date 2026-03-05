@@ -8,6 +8,7 @@ use App\Enums\EmploymentStatus;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -32,6 +33,7 @@ use jeremyaliparo\IntegrationSchemas\Enums\Users\UserStatus;
  */
 final class User extends Model
 {
+    use HasFactory;
     use HasUlids;
 
     protected $guarded = [];

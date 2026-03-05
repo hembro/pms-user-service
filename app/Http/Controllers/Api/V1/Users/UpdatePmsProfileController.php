@@ -29,6 +29,6 @@ final class UpdatePmsProfileController
             user: $user
         );
 
-        return $this->success(['id' => $user->id], 'PMS Profile updated successfully.');
+        return $this->success(['id' => $user->id], 'PMS profile updated successfully.');
     }
 }
