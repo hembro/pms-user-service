@@ -10,5 +10,4 @@ enum EmploymentStatus: string
     case CONTRACT_OF_SERVICE_PERSONNEL = 'contract-of-service-personnel';
     case OUTSOURCED_PERSONNEL = 'outsourced-personnel';
     case JOB_ORDER_PERSONNEL = 'job-order-personnel';
-    case UNSPECIFIED = 'unspecified';
 }

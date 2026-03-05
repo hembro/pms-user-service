@@ -10,5 +10,4 @@ enum EducationLevel: string
     case POST_BACCALAUREATE = 'post-baccalaureate';
     case MASTERS = 'masters';
     case DOCTORATE_PHD = 'doctorate-phd';
-    case UNSPECIFIED = 'unspecified';
 }

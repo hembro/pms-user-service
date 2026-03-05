@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\EmploymentStatus;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -19,11 +20,11 @@ use jeremyaliparo\IntegrationSchemas\Enums\Users\UserStatus;
  * @property-read string $name
  * @property-read string $status
  * @property-read ?string $avatar_url
- * @property-read ?Collection<Division> $divisions
+ * @property-read Collection<Division> $divisions
  * @property-read ?Expertise $expertise
  * @property-read ?Designation $designation
- * @property-read ?string $employment_status
- * @property-read ?Collection<AreaAssignment> $areaAssignments
+ * @property-read EmploymentStatus $employment_status
+ * @property-read Collection<AreaAssignment> $areaAssignments
  * @property-read ?Collection<EducationBackground> $educationBackgrounds
  * @property-read ?CarbonInterface $last_synced_at
  * @property-read ?CarbonInterface $created_at
@@ -88,6 +89,7 @@ final class User extends Model
     {
         return [
             'status' => UserStatus::class,
+            'employment_status' => EmploymentStatus::class,
             'last_synced_at' => 'datetime',
         ];
     }

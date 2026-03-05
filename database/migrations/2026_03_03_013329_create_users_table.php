@@ -32,8 +32,10 @@ return new class extends Migration
                 ->constrained(table: 'designations', column: 'id')
                 ->nullOnDelete();
 
-            $table->string('employment_status')->default('unspecified')->index();
-            // TODO: education background
+            $table->string('employment_status')
+                ->nullable()
+                ->index();
+
             $table->string('dpmis_pm_id')->nullable()->unique();
             $table->timestamp('submitted_to_dpmis_at')->nullable();
 

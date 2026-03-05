@@ -18,9 +18,9 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             $table->string('level');
-            $table->string('school')->nullable();
-            $table->string('degree')->nullable();
-            $table->string('year')->nullable();
+            $table->string('school');
+            $table->string('degree');
+            $table->string('year');
             $table->text('awards')->nullable();
 
             $table->timestamps();
