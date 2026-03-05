@@ -9,4 +9,5 @@ abstract class TestCase extends BaseTestCase
 {
     public ?MockInterface $loggerMock;
     public $action;
+    public $policy;
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Enums\EducationLevel;
 use App\Enums\EmploymentStatus;
+use App\Enums\Role;
 use App\Models\AreaAssignment;
 use App\Models\Designation;
 use App\Models\Division;
@@ -54,6 +55,69 @@ describe('Update PMS Profile Feature: The Unhappy Path', function () {
                 'education_backgrounds.0.level',
                 'education_backgrounds.0.school',
             ]);
+    });
+    it('allows a pms admin to update ANY user\'s profile', function () {
+        $user = User::factory()->create();
+        $admin = User::factory()->create(); // No shared division needed
+
+        $division = Division::factory()->create();
+        $area = AreaAssignment::factory()->create();
+
+        $response = $this->withHeaders([
+            'X-User-Id' => $admin->id,
+            'X-User-Roles' => Role::PMS_ADMIN->value,
+        ])->putJson(getRoute($user->id), [
+            'employment_status' => EmploymentStatus::PERMANENT_PERSONNEL->value,
+            'divisions' => [$division->id],
+            'area_assignments' => [$area->id],
+        ]);
+
+        $response->assertOk();
+    });
+
+    it('allows a division admin to update a user in their SHARED division', function () {
+        $user = User::factory()->create();
+        $admin = User::factory()->create();
+        $area = AreaAssignment::factory()->create();
+
+        // 1. Setup the shared boundary!
+        $sharedDivision = Division::factory()->create();
+        $admin->divisions()->attach($sharedDivision->id);
+        $user->divisions()->attach($sharedDivision->id);
+
+        $response = $this->withHeaders([
+            'X-User-Id' => $admin->id,
+            'X-User-Roles' => Role::PMS_DIVISION_ADMIN->value,
+        ])->putJson(getRoute($user->id), [
+            'employment_status' => EmploymentStatus::PERMANENT_PERSONNEL->value,
+            'divisions' => [$sharedDivision->id],
+            'area_assignments' => [$area->id],
+        ]);
+
+        $response->assertOk();
+    });
+
+    it('denies a division admin from updating a user outside their division', function () {
+        $user = User::factory()->create();
+        $admin = User::factory()->create();
+        $area = AreaAssignment::factory()->create();
+
+        $adminDivision = Division::factory()->create();
+        $userDivision = Division::factory()->create();
+
+        $admin->divisions()->attach($adminDivision->id);
+        $user->divisions()->attach($userDivision->id); // They do not match!
+
+        $response = $this->withHeaders([
+            'X-User-Id' => $admin->id,
+            'X-User-Roles' => Role::PMS_DIVISION_ADMIN->value,
+        ])->putJson(getRoute($user->id), [
+            'employment_status' => EmploymentStatus::PERMANENT_PERSONNEL->value,
+            'divisions' => [$userDivision->id],
+            'area_assignments' => [$area->id],
+        ]);
+
+        $response->assertForbidden();
     });
 });
 
@@ -170,5 +234,30 @@ describe('Update PMS Profile Feature: The Happy Path', function () {
             ->and($education->contains('school', 'Old University'))->toBeFalse() // Proves deletion
             ->and($education->contains('school', 'University of the Philippines'))->toBeTrue()
             ->and($education->contains('awards', 'Cum Laude'))->toBeTrue();
+    });
+
+    it('returns 403 Forbidden if a user tries to update another user\'s profile without admin rights', function () {
+
+        $actor = User::factory()->create();
+        $targetUser = User::factory()->create();
+        $division = Division::factory()->create();
+        $area = AreaAssignment::factory()->create();
+
+        // The malicious actor tries to send a valid payload to the TARGET's URL
+        $payload = [
+            'employment_status' => EmploymentStatus::PERMANENT_PERSONNEL->value,
+            'divisions' => [$division->id],
+            'area_assignments' => [$area->id],
+        ];
+
+        // We simulate the Gateway authenticating the $actor, but with standard roles
+        $response = $this->withHeaders([
+            'X-User-Id' => $actor->id,
+            'X-User-Roles' => 'pms.proponent', // No admin role!
+        ])
+            ->putJson(getRoute($targetUser->id), $payload);
+
+        // Assert: The system successfully blocked the unauthorized access
+        $response->assertForbidden(); // 403
     });
 });
