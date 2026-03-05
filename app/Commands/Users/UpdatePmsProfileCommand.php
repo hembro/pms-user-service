@@ -10,13 +10,15 @@ use App\Http\Requests\Api\V1\Users\UpdatePmsProfileRequest;
 
 final readonly class UpdatePmsProfileCommand
 {
+    /**
+     * @param  ?array<EducationBackground>  $educationBackgrounds
+     */
     public function __construct(
         public ?EmploymentStatus $employmentStatus,
         public ?string $expertiseInput,
         public ?string $designationInput,
         public array $divisions,
         public array $areaAssignments,
-        /** @var array<EducationBackground>|null */
         public ?array $educationBackgrounds,
     ) {}
 
