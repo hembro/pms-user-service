@@ -4,19 +4,14 @@ declare(strict_types=1);
 
 namespace App\Actions\Integration\Users;
 
-use App\Actions\Integration\Users\Concerns\SyncsUserContext;
 use App\Models\User;
-use Illuminate\Database\DatabaseManager;
 use jeremyaliparo\IntegrationSchemas\Attributes\UserAttributes;
 use jeremyaliparo\IntegrationSchemas\Events\Users\UserProfileUpdatedEvent;
 use Psr\Log\LoggerInterface;
 
 final readonly class SyncUpdatedUser
 {
-    use SyncsUserContext;
-
     public function __construct(
-        private DatabaseManager $db,
         private LoggerInterface $logger
     ) {}
 

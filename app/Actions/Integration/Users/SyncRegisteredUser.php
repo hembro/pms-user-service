@@ -4,20 +4,12 @@ declare(strict_types=1);
 
 namespace App\Actions\Integration\Users;
 
-use App\Actions\Integration\Users\Concerns\SyncsUserContext;
 use App\Models\User;
-use Illuminate\Database\DatabaseManager;
 use jeremyaliparo\IntegrationSchemas\Attributes\UserAttributes;
 use jeremyaliparo\IntegrationSchemas\Events\Users\UserRegisteredEvent;
 
 final readonly class SyncRegisteredUser
 {
-    use SyncsUserContext;
-
-    public function __construct(
-        private DatabaseManager $db
-    ) {}
-
     public function handle(UserRegisteredEvent $event): void
     {
         /** @var UserAttributes $attributes */
