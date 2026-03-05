@@ -18,7 +18,7 @@ use jeremyaliparo\IntegrationSchemas\Enums\Users\UserStatus;
  * @property-read string $id
  * @property-read string $email
  * @property-read string $name
- * @property-read string $status
+ * @property-read UserStatus $status
  * @property-read ?string $avatar_url
  * @property-read Collection<Division> $divisions
  * @property-read ?Expertise $expertise

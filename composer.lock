@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a7ad7d82bd85df1794e090573a56f771",
+    "content-hash": "faaae7da726a66c7d50fc631585dccad",
     "packages": [
         {
             "name": "brick/math",
@@ -1115,16 +1115,16 @@
         },
         {
             "name": "jeremyaliparo/service-integration-core",
-            "version": "1.5.0",
+            "version": "1.6.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:jeremyaliparo/service-integration-core.git",
-                "reference": "a9968518e40cbdc718f88d9ec50e51b623eb648f"
+                "reference": "7797e05f29a0d79607141dbfe6c9bb75f90298f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jeremyaliparo/service-integration-core/zipball/a9968518e40cbdc718f88d9ec50e51b623eb648f",
-                "reference": "a9968518e40cbdc718f88d9ec50e51b623eb648f",
+                "url": "https://api.github.com/repos/jeremyaliparo/service-integration-core/zipball/7797e05f29a0d79607141dbfe6c9bb75f90298f4",
+                "reference": "7797e05f29a0d79607141dbfe6c9bb75f90298f4",
                 "shasum": ""
             },
             "require": {
@@ -1148,10 +1148,10 @@
             },
             "description": "Core messaging, Payloads, and AMQP Daemons for our microservices.",
             "support": {
-                "source": "https://github.com/jeremyaliparo/service-integration-core/tree/1.5.0",
+                "source": "https://github.com/jeremyaliparo/service-integration-core/tree/1.6.1",
                 "issues": "https://github.com/jeremyaliparo/service-integration-core/issues"
             },
-            "time": "2026-03-04T08:08:12+00:00"
+            "time": "2026-03-05T02:47:26+00:00"
         },
         {
             "name": "jeremyaliparo/service-integration-schemas",
