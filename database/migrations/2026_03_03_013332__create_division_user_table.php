@@ -10,18 +10,14 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('area_assignment_user', function (Blueprint $table) {
-            $table->ulid('id')->primary();
-
+        Schema::create('division_user', function (Blueprint $table) {
             $table->foreignUlid('user_id')
                 ->constrained(table: 'users', column: 'id')
                 ->cascadeOnDelete();
 
-            $table->foreignUlid('area_assignment_id')
-                ->constrained(table: 'area_assignments', column: 'id')
+            $table->foreignUlid('division_id')
+                ->constrained(table: 'divisions', column: 'id')
                 ->cascadeOnDelete();
-
-            $table->unique(['user_id', 'area_assignment_id']);
 
             $table->timestamps();
         });

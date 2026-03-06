@@ -10,13 +10,18 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('pms_user_profiles', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->ulid('id')->primary();
+            $table->string('email')->unique();
 
-            $table->foreignUlid('user_id')
-                ->constrained(table: 'users', column: 'id')
-                ->cascadeOnDelete();
+            // --- UI Projection Data ---
+            $table->string('display_name');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('status')->index();
+            $table->string('avatar_url')->nullable();
 
+            // --- PMS Specific Data ---
             $table->foreignUlid('expertise_id')
                 ->nullable()
                 ->constrained(table: 'expertises', column: 'id')
@@ -27,10 +32,15 @@ return new class extends Migration
                 ->constrained(table: 'designations', column: 'id')
                 ->nullOnDelete();
 
-            $table->string('employment_status')->index();
-            $table->string('dpmis_pm_id')->nullable()->unique();
+            $table->string('employment_status')
+                ->nullable()
+                ->index();
 
+            $table->string('dpmis_pm_id')->nullable()->unique();
             $table->timestamp('submitted_to_dpmis_at')->nullable();
+
+            // --- Synchronization Telemetry ---
+            $table->timestamp('last_synced_at')->nullable();
             $table->timestamps();
         });
     }
