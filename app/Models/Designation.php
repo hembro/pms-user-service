@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * @property-read string $id
@@ -33,5 +34,10 @@ final class Designation extends Model
             foreignKey: 'designation_id',
             localKey: 'id',
         );
+    }
+
+    protected static function booted(): void
+    {
+        self::saved(fn () => Cache::forget('lookups:designation'));
     }
 }

@@ -13,7 +13,7 @@ return new class extends Migration
         Schema::create('area_assignments', function (Blueprint $table) {
             $table->ulid('id')->primary();
 
-            $table->string('title')->unique();
+            $table->string('name')->unique();
             $table->text('remarks')->nullable();
 
             $table->timestamps();

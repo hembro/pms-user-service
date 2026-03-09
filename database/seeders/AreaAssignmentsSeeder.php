@@ -31,16 +31,16 @@ final class AreaAssignmentsSeeder extends Seeder
             'Others',
         ];
 
-        $payload = array_map(fn (string $title) => [
+        $payload = array_map(fn (string $name) => [
             'id' => (string) Str::ulid(),
-            'title' => $title,
+            'name' => $name,
             'created_at' => now(),
             'updated_at' => now(),
         ], $areas);
 
         AreaAssignment::query()->upsert(
             values: $payload,
-            uniqueBy: ['title'],
+            uniqueBy: ['name'],
             update: ['updated_at']
         );
     }
