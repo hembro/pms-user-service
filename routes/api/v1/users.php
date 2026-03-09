@@ -7,5 +7,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:api', 'throttle:api'])->group(function (): void {
     Route::put('/{user}/profile', UpdatePmsProfileController::class)
+        ->can('update', 'user')
         ->name('profile.update');
 });

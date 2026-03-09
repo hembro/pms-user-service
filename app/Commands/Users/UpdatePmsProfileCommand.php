@@ -7,6 +7,7 @@ namespace App\Commands\Users;
 use App\DTOs\Users\EducationBackground;
 use App\Enums\EmploymentStatus;
 use App\Http\Requests\Api\V1\Users\UpdatePmsProfileRequest;
+use App\Models\User;
 
 final readonly class UpdatePmsProfileCommand
 {
@@ -14,6 +15,7 @@ final readonly class UpdatePmsProfileCommand
      * @param  ?array<EducationBackground>  $educationBackgrounds
      */
     public function __construct(
+        public User $user,
         public ?EmploymentStatus $employmentStatus,
         public ?string $expertiseInput,
         public ?string $designationInput,
@@ -22,11 +24,12 @@ final readonly class UpdatePmsProfileCommand
         public ?array $educationBackgrounds,
     ) {}
 
-    public static function fromRequest(UpdatePmsProfileRequest $request): self
+    public static function fromRequest(UpdatePmsProfileRequest $request, User $user): self
     {
         $data = $request->validated();
 
         return new self(
+            user: $user,
             employmentStatus: $request->enum('employment_status', EmploymentStatus::class),
             expertiseInput: $data['expertise'] ?? null,
             designationInput: $data['designation'] ?? null,
