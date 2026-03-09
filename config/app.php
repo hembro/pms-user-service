@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use jeremyaliparo\Foundation\Enums\System;
+
 return [
 
     /*
@@ -125,4 +127,5 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'system_identity' => env('APP_SYSTEM_IDENTITY', System::PMS->value),
 ];

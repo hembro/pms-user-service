@@ -17,7 +17,7 @@ return new class extends Migration
                 ->constrained(table: 'users', column: 'id')
                 ->cascadeOnDelete();
 
-            $table->string('level');
+            $table->string('level')->index();
             $table->string('school');
             $table->string('degree');
             $table->string('year');

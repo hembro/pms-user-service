@@ -9,26 +9,19 @@ use App\Commands\Users\UpdatePmsProfileCommand;
 use App\Http\Requests\Api\V1\Users\UpdatePmsProfileRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Gate;
-use jeremyaliparo\HttpResponses\Traits\HasApiResponse;
 
 final class UpdatePmsProfileController
 {
-    use HasApiResponse;
-
     public function __construct(
         public readonly UpdatePmsProfile $action
     ) {}
 
     public function __invoke(UpdatePmsProfileRequest $request, User $user): JsonResponse
     {
-        Gate::authorize('update', $user);
-
         $user = $this->action->handle(
-            command: UpdatePmsProfileCommand::fromRequest($request),
-            user: $user
+            command: UpdatePmsProfileCommand::fromRequest($request, $user),
         );
 
-        return $this->success(['id' => $user->id], 'PMS profile updated successfully.');
+        return JsonResponse::success(['id' => $user->id], 'PMS profile updated successfully.');
     }
 }

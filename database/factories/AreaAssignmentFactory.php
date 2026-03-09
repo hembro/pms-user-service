@@ -11,7 +11,7 @@ final class AreaAssignmentFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->company(),
+            'name' => $this->faker->company(),
         ];
     }
 }

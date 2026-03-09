@@ -9,6 +9,7 @@ use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * @property-read string $id
@@ -38,7 +39,13 @@ final class EducationBackground extends Model
         );
     }
 
-    protected function casts()
+    protected static function booted(): void
+    {
+        self::saved(fn () => Cache::forget('lookups:school'));
+        self::deleted(fn () => Cache::forget('lookups:school'));
+    }
+
+    protected function casts(): array
     {
         return [
             'level' => EducationLevel::class,

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\EmploymentStatus;
+use App\Enums\Role;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -85,6 +86,20 @@ final class User extends Model
             foreignKey: 'user_id',
             localKey: 'id',
         );
+    }
+
+    public function hasGatewayRole(array|Role $roles): bool
+    {
+        $gatewayRoles = $this->getAttribute('gateway_roles') ?? [];
+        $rolesToCheck = is_array($roles) ? $roles : [$roles];
+
+        foreach ($rolesToCheck as $role) {
+            if (in_array($role->value, $gatewayRoles, true)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     protected function casts(): array

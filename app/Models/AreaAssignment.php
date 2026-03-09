@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property-read string $id
- * @property-read string $title
+ * @property-read string $name
  * @property-read ?string $remarks
  * @property-read ?CarbonInterface $created_at
  * @property-read ?CarbonInterface $updated_at

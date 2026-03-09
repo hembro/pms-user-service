@@ -18,23 +18,23 @@ final readonly class UpdatePmsProfile
         private DatabaseManager $db
     ) {}
 
-    public function handle(UpdatePmsProfileCommand $command, User $user): User
+    public function handle(UpdatePmsProfileCommand $command): User
     {
         $user = $this->db->transaction(
-            callback: function () use ($command, $user): User {
+            callback: function () use ($command): User {
 
-                $user->update([
+                $command->user->update([
                     'employment_status' => $command->employmentStatus,
                     'expertise_id' => $this->resolveCreatableId(Expertise::class, $command->expertiseInput),
                     'designation_id' => $this->resolveCreatableId(Designation::class, $command->designationInput),
                 ]);
 
-                $user->areaAssignments()->sync($command->areaAssignments);
-                $user->divisions()->sync($command->divisions);
+                $command->user->areaAssignments()->sync($command->areaAssignments);
+                $command->user->divisions()->sync($command->divisions);
 
                 if ($command->educationBackgrounds !== null) {
 
-                    $user->educationBackgrounds()->delete();
+                    $command->user->educationBackgrounds()->delete();
 
                     $educationRecords = array_map(
                         fn (EducationBackground $bg): array => $bg->toAttributes(),
@@ -42,11 +42,11 @@ final readonly class UpdatePmsProfile
                     );
 
                     if (! empty($educationRecords)) {
-                        $user->educationBackgrounds()->createMany($educationRecords);
+                        $command->user->educationBackgrounds()->createMany($educationRecords);
                     }
                 }
 
-                return $user;
+                return $command->user;
             }
         );
 
