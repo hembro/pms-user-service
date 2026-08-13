@@ -10,7 +10,7 @@ env:
   PROJECT_ID: project-501674b6-7d67-40dc-99c
   GAR_LOCATION: asia-southeast1
   GAR_REPO: laravel-microservices-repo
-  IMAGE_NAME: user-service
+  IMAGE_NAME: pms-user-service
   CLUSTER_NAME: poc-gke-cluster
   CLUSTER_ZONE: asia-southeast1
   NAMESPACE: production
@@ -90,7 +90,7 @@ jobs:
 
       - name: Deploy to GKE
         run: |
-          cd k8s/apps/user-service/
+          cd k8s/apps/pms-user-service/
 
           sed -i "s/DB_HOST=.*/DB_HOST=10.72.128.5/" .env.secret
           sed -i "s/DB_PORT=.*/DB_PORT=5432/" .env.secret
@@ -111,5 +111,5 @@ jobs:
           kustomize build . | kubectl apply -n ${{ env.NAMESPACE }} -f -
 
           # Wait for migration and rollout
-          kubectl wait --for=condition=complete job/user-service-migrate --timeout=120s -n ${{ env.NAMESPACE }}
-          kubectl rollout status deployment/user-service-laravel-app -n ${{ env.NAMESPACE }}
+          kubectl wait --for=condition=complete job/pms-user-service-migrate --timeout=120s -n ${{ env.NAMESPACE }}
+          kubectl rollout status deployment/pms-user-service-laravel-app -n ${{ env.NAMESPACE }}

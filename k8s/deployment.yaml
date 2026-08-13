@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: user-service
+  name: pms-user-service
   labels:
-    app: user-service
+    app: pms-user-service
     env: production
 spec:
   # Start with 2 replicas for High Availability
   replicas: 2
   selector:
     matchLabels:
-      app: user-service
+      app: pms-user-service
   template:
     metadata:
       labels:
-        app: user-service
+        app: pms-user-service
         env: production
     spec:
       containers:
-      - name: user-service
+      - name: pms-user-service
         # Use the exact tag we verified in Artifact Registry
-        image: asia-southeast1-docker.pkg.dev/project-501674b6-7d67-40dc-99c/laravel-microservices-repo/user-service:v1.0.0
+        image: asia-southeast1-docker.pkg.dev/project-501674b6-7d67-40dc-99c/laravel-microservices-repo/pms-user-service:v1.0.0
         ports:
         - containerPort: 80 # Or 8080 depending on your Dockerfile configuration
         

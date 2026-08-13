@@ -12,7 +12,7 @@ namePrefix: pms-user-service-
 # 3. Swap the placeholder image with the actual Artifact Registry image
 images:
   - name: base-image:placeholder
-    newName: asia-southeast1-docker.pkg.dev/project-501674b6-7d67-40dc-99c/laravel-microservices-repo/user-service
+    newName: asia-southeast1-docker.pkg.dev/project-501674b6-7d67-40dc-99c/laravel-microservices-repo/pms-user-service
     newTag: v1.0.0 # Or 'latest', or a Git commit SHA
 
 # 4. Generate a ConfigMap from the safe file
