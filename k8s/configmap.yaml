@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: laravel-config
+data:
+  APP_ENV: "production"
+  APP_DEBUG: "false"
+  LOG_CHANNEL: "stderr"
+  DB_CONNECTION: "pgsql"
+  # We will update this later with your actual Cloud SQL Private IP
+  DB_HOST: "10.0.0.5" 
+  DB_PORT: "5432"
+  DB_DATABASE: "laravel_poc"
+  DB_USERNAME: "postgres"
+  QUEUE_CONNECTION: "redis"
+  # We will update this later with your actual Memorystore IP
+  REDIS_HOST: "10.0.0.6"

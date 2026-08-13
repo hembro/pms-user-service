@@ -1,0 +1,28 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# 1. Inherit the master blueprint
+resources:
+  - serviceaccount.yaml
+  - ../../base
+
+# 2. Automatically prepend "user-service-" to all resource names and labels
+namePrefix: pms-user-service-
+
+# 3. Swap the placeholder image with the actual Artifact Registry image
+images:
+  - name: base-image:placeholder
+    newName: asia-southeast1-docker.pkg.dev/project-501674b6-7d67-40dc-99c/laravel-microservices-repo/user-service
+    newTag: v1.0.0 # Or 'latest', or a Git commit SHA
+
+# 4. Generate a ConfigMap from the safe file
+configMapGenerator:
+  - name: app-env-config
+    envs:
+      - .env.config
+
+# 5. Generate a Secret from the ignored file
+secretGenerator:
+  - name: app-env-secret
+    envs:
+      - .env.secret

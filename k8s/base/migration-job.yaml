@@ -1,0 +1,51 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: migrate
+  labels:
+    component: migration
+spec:
+  backoffLimit: 0 # Fail immediately if migrations fail
+  template:
+    metadata:
+      labels:
+        component: migration
+    spec:
+      serviceAccountName: laravel-k8s-sa
+      restartPolicy: Never
+
+      # -----------------------------------------------------
+      # 1. THE NATIVE SIDECAR (Kills itself automatically)
+      # -----------------------------------------------------
+      initContainers:
+        - name: cloud-sql-proxy
+          image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.14.0
+          restartPolicy: Always # <--- The GKE magic for Jobs
+          args:
+            - "--private-ip"
+            - "--port=3306"
+            - "$(CLOUD_SQL_CONNECTION_NAME)"
+          env:
+            - name: CLOUD_SQL_CONNECTION_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: app-env-config
+                  key: CLOUD_SQL_CONNECTION_NAME
+          resources:
+            requests:
+              memory: "32Mi"
+              cpu: "10m"
+
+      # -----------------------------------------------------
+      # 2. YOUR LARAVEL MIGRATION TASK
+      # -----------------------------------------------------
+      containers:
+        - name: artisan-migrate
+          image: base-image:placeholder
+          # Override the default command to run migrations
+          command: ["php", "artisan", "migrate", "--force"]
+          envFrom:
+            - configMapRef:
+                name: app-env-config
+            - secretRef:
+                name: app-env-secret

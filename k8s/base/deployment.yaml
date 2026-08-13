@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: laravel-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: laravel-app
+  template:
+    metadata:
+      labels:
+        app: laravel-app
+    spec:
+      serviceAccountName: laravel-k8s-sa
+      containers:
+        - name: application
+          image: base-image:placeholder # Kustomize will replace this
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: app-env-config
+            - secretRef:
+                name: app-env-secret
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "250m"
+          livenessProbe:
+            httpGet:
+              path: /up
+              port: 80
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /up
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+        - name: cloud-sql-proxy
+          image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.14.0
+          args:
+            # Use private IP to keep traffic inside your VPC and avoid egress costs
+            - "--private-ip"
+            - "--port=3306"
+            # We pass the connection name via an environment variable
+            - "$(CLOUD_SQL_CONNECTION_NAME)"
+          env:
+            - name: CLOUD_SQL_CONNECTION_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: app-env-config
+                  key: CLOUD_SQL_CONNECTION_NAME
+          securityContext:
+            runAsNonRoot: true
+          resources:
+            # Extremely strict limits to protect your fixed budget across 13 services
+            requests:
+              memory: "32Mi"
+              cpu: "10m"
+            limits:
+              memory: "64Mi"
+              cpu: "50m"

@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  labels:
+    app: user-service
+    env: production
+spec:
+  # Start with 2 replicas for High Availability
+  replicas: 2
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+        env: production
+    spec:
+      containers:
+      - name: user-service
+        # Use the exact tag we verified in Artifact Registry
+        image: asia-southeast1-docker.pkg.dev/project-501674b6-7d67-40dc-99c/laravel-microservices-repo/user-service:v1.0.0
+        ports:
+        - containerPort: 80 # Or 8080 depending on your Dockerfile configuration
+        
+        # 1. Resource Allocation (Cost Control)
+        resources:
+          requests:
+            cpu: "100m"       # 1/10th of a CPU core
+            memory: "256Mi"   # Minimum memory guaranteed
+          limits:
+            cpu: "500m"       # Max CPU allowed (prevents noisy neighbors)
+            memory: "512Mi"   # Max memory before getting OOMKilled
+            
+        # 2. Liveness Probe (Restarts the pod if it freezes)
+        livenessProbe:
+          httpGet:
+            path: /up         # Laravel 11's default health endpoint (use / if older)
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          
+        # 3. Readiness Probe (Stops sending traffic if it's busy/failing)
+        readinessProbe:
+          httpGet:
+            path: /up
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
