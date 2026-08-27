@@ -20,7 +20,7 @@ spec:
       containers:
       - name: pms-user-service
         # Use the exact tag we verified in Artifact Registry
-        image: asia-southeast1-docker.pkg.dev/project-501674b6-7d67-40dc-99c/laravel-microservices-repo/pms-user-service:v1.0.0
+        image: asia-southeast1-docker.pkg.dev/project-4d486229-502c-4ea7-890/laravel-microservices-repo/pms-user-service:v1.0.0
         ports:
         - containerPort: 80 # Or 8080 depending on your Dockerfile configuration
         
