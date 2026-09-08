@@ -11,7 +11,7 @@ spec:
       labels:
         component: migration
     spec:
-      serviceAccountName: laravel-k8s-sa
+      serviceAccountName: pm-user-service-laravel-k8s-sa
       restartPolicy: Never
 
       # -----------------------------------------------------
