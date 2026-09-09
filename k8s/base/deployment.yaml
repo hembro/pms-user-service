@@ -12,7 +12,7 @@ spec:
       labels:
         app: laravel-app
     spec:
-      serviceAccountName: laravel-k8s-sa
+      serviceAccountName: pms-user-service-laravel-k8s-sa
       containers:
         - name: application
           image: base-image:placeholder # Kustomize will replace this
